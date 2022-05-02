@@ -2,6 +2,7 @@ import os
 import pdb
 from board import Board
 from game import Game
+from players.computer import Computer
 from players.human import Human
 
 class Cli:
@@ -43,10 +44,26 @@ class Cli:
   def game_mode(self, user_input):
     if(user_input == "1"):
       self.two_player_game()
+    elif(user_input == "2"):
+      self.one_player_game()
+    elif(user_input == "3"):
+      self.zero_player_game()
   
   def two_player_game(self):
     player_1 = Human("X")
     player_2 = Human("O")
+    board = Board()
+    Game(player_1, player_2, board)
+  
+  def one_player_game(self):
+    player_1 = Human("X")
+    player_2 = Computer("O")
+    board = Board()
+    Game(player_1, player_2, board)
+
+  def zero_player_game(self):
+    player_1 = Computer("X")
+    player_2 = Computer("O")
     board = Board()
     Game(player_1, player_2, board)
 

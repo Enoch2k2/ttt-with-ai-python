@@ -23,13 +23,14 @@ class Game:
     self.play()
 
   def turn(self):
-    user_input = int(input("Type 1-9 to make a move: "))
+    
+    user_input = int(self.current_user().move(self.board))
 
     if(self.valid_move(user_input)):
       # current user makes a move
       # display the move
-      self.current_user().move(user_input - 1, self.board)
       self.clear_terminal()
+      self.board.update(self.current_user().token, user_input - 1)
       self.board.display()
     else:
       self.clear_terminal()
@@ -50,7 +51,10 @@ class Game:
     return self.board.full() and not self.won() # is full or no winner
 
   def won(self):
-    return False
+    return next((win_combo for win_combo in Game.WIN_COMBO if self.board.cells[win_combo[0]] == self.board.cells[win_combo[1]] and self.board.cells[win_combo[1]] == self.board.cells[win_combo[2]] and self.board.cells[win_combo[2]]!= " "), False)
+
+  def winner(self):
+    return self.board.cells[self.won()[0]]
 
   def game_over(self):
     return self.cats_game() or self.won()
@@ -64,9 +68,10 @@ class Game:
   def play(self):
     self.board.display()
     while not self.game_over():
-      pdb.set_trace()
       self.turn()
     
-    print("Cat's Game!")
-    
+    if(self.won()):
+      print(f"Player {self.winner()} won!")
+    else:
+      print("Cat's game!")
       
