@@ -1,5 +1,4 @@
 import os
-import pdb
 from board import Board
 from game import Game
 from players.computer import Computer
@@ -42,29 +41,15 @@ class Cli:
       return False
 
   def game_mode(self, user_input):
+    board = Board()
     if(user_input == "1"):
-      self.two_player_game()
+      self.create_game(Human("X"), Human("O"), board)
     elif(user_input == "2"):
-      self.one_player_game()
+      self.create_game(Human("X"), Computer("O"), board)
     elif(user_input == "3"):
-      self.zero_player_game()
+      self.create_game(Computer("X"), Computer("O"), board)
   
-  def two_player_game(self):
-    player_1 = Human("X")
-    player_2 = Human("O")
-    board = Board()
-    Game(player_1, player_2, board)
-  
-  def one_player_game(self):
-    player_1 = Human("X")
-    player_2 = Computer("O")
-    board = Board()
-    Game(player_1, player_2, board)
-
-  def zero_player_game(self):
-    player_1 = Computer("X")
-    player_2 = Computer("O")
-    board = Board()
+  def create_game(self, player_1, player_2, board):
     Game(player_1, player_2, board)
 
   def invalid_message(self):
